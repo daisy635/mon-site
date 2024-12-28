@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Guide Touristique de [Nom de la Ville]</title>
+    <style>
+        /* Style global */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #b1b2c7;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        /* En-tête et navigation */
+        header {
+            background-color: #244669;
+            color: white;
+            position: fixed;
+            width: 100%;
+            height: 100px;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            padding: 1rem 0;
+
+        }
+
+        header h1 {
+            margin: 0;
+        }
+        nav a {
+            padding-top: 0.5%;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #ffdd57;
+        }
+        /* Menu Hamburger */
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            margin-right: 5%;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .menu.active {
+            display: block;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #344a61;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu a {
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* Section Hero avec animation */
+        .hero {
+            color: #fff;
+            text-align: center;
+            padding: 7%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url('C:/Users/Daniel/Pictures/fond.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* L'image reste fixe */
+            animation: fadeIn 2s ease-in-out;
+        }
+        .hero .btn {
+        background: #FFC107;
+        color: #333;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: color 0.3s;
+        }
+        .hero .btn:hover {
+        background: #e0a800;
+        }
+        /* Animation pour la section Hero */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Section d'introduction */
+        .intro {
+            padding: 120px 20px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        .intro h2 {
+            color: #007BFF;
+        }
+
+        .intro p {
+            color: #333;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .menu { 
+                margin-right: 50px;
+                display: none;
+            }
+
+            .menu a {
+                text-align: center;
+                padding: 10px 20px;
+            }
+        }
+
+ #language-selector {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+#google_translate_element {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+/* Footer */
+footer {
+    background-color: #244669;
+    color: #fff;
+    text-align: center;
+    padding: 1%;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 20px; /* Distance par rapport au bas de la fenêtre */
+    right: 20px;  /* Distance par rapport au côté droit de la fenêtre */
+    background-color: #232424;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%; /* Forme circulaire */
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: none; /* Masqué par défaut */
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+/* Conteneur du carrousel */
+.carousel {
+            position: relative;
+            margin-left: 15%;
+            width: 80%;
+            max-width: 900px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Images */
+        .carousel-track {
+            padding-top: 20px;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Description */
+        .carousel-caption {
+            position: absolute;
+            bottom: 10%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 40px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        /* Boutons de navigation */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .arrow.left {
+            left: 10px;
+        }
+
+        .arrow.right {
+            right: 10px;
+        }
+
+        /* Points indicateurs */
+        .dots {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #4caf50;
+        }
+        #attractions {
+    padding: 1%;
+    background: #f4f4f4;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10%, 1fr));
+    gap: 1%;
+}
+
+.card {
+    background: #fff;
+    border: 0.125% solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 5%;
+}
+
+.card img {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+}
+/* Style du conteneur avec l'image */
+.image-container {
+            position: relative;
+            max-width: 50%; /* Vous pouvez ajuster la taille ici */
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 2%;
+            display: flex;
+            text-align: center;
+            margin-left: 30%;
+        }
+
+        /* L'image */
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px; /* Bords arrondis (vous pouvez ajuster la valeur) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+         .text-overlay span{
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        /* Style du texte sur l'image */
+        .text-overlay {
+            width: 85%; /* Largeur de la div */
+            font-size: 200%; /* La taille dépend de la largeur de la fenêtre */
+            position: absolute;
+            top: 50%; /* Centre le texte verticalement */
+            left: 50%; /* Centre le texte horizontalement */
+            transform: translate(-50%, -50%); /* Pour centrer parfaitement */
+            color: white; /* Couleur du texte */
+            font-family: Arial, sans-serif; /* Police du texte */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Ombre portée pour améliorer la lisibilité */
+        }
+        .rounded-div {
+            font-size: 50%;
+            background-color: wheat; /* Couleur de fond */
+            border-radius: 20px; /* Bords arrondis (vous pouvez ajuster la valeur) */
+            padding: 1%; /* Espace à l'intérieur de la div */
+            color: white; /* Couleur du texte */
+            display: flex; /* Flexbox pour centrer le texte */
+            justify-content: center; /* Centrer horizontalement */
+            align-items: center; /* Centrer verticalement */
+        }
+        .text-with-shadow {
+            color: white; /* Couleur du texte */
+            -webkit-text-stroke: 0.1px black; /* Contour noir de 2px (supporté par Chrome, Safari) */
+            text-shadow: 6px 6px 10px rgba(0, 0, 0, 0.7); /* Ombre du texte */
+            font-size: 150%;
+        }
+        .ombre{
+            font-family: Arial, sans-serif; /* Police du texte */
+            color: white; /* Couleur du texte */
+            -webkit-text-stroke: 1px black; /* Contour noir de 2px (supporté par Chrome, Safari) */
+            text-align: center;
+            font-size: 100%;
+        }
+        .floating-images-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Images flottantes */
+.floating-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: float 3s infinite ease-in-out; /* Animation pour le mouvement flottant */
+}
+
+/* Effet au survol */
+.floating-image:hover {
+    transform: scale(1.1); /* Zoom léger */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation de flottement */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Monte légèrement */
+    }
+    100% {
+        transform: translateY(0); /* Retour à la position initiale */
+    }
+}
+</style>
+</head>
+<body>
+<!-- En-tête avec navigation -->
+<header>
+    <div id="google_translate_element"></div><br>
+    <nav>
+        <h1 style="text-align: center;">Guide de touristique de la ville de Gümüşhane</h1><br>
+        <div class="menu-icon" id="menu-icon" style="text-align: right;">&#9776;</div>
+        <div class="menu" id="menu">
+            <a href="#intro">Introduction</a>
+            <a href="#attractions">Attractions</a>
+            <a href="#restaurants">Restaurants</a>
+            <a href="#hebergement">Hébergements</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+</header>
+<!-- Section Hero -->
+<section id="home" class="hero">
+    <br><br><br><br>
+<div>
+    <div>
+        <h1>Explorez la ville de Gümüşhane</h1>
+        <p>Venez découvrir une ville pleine d'histoire et de culture</p>
+        <a href="C:\Users\Daniel\Desktop\DAISY\his.html" class="btn">Découvrir</a>
+    </div>
+</div>
+</section>
+<!-- Section d'introduction -->
+<section id="intro" class="intro">
+    <h2>Bienvenue à Gümüşhane</h2>
+    <p>Gümüşhane est une petite ville nichée dans le nord-est de la Turquie, entourée par les montagnes majestueuses des Ponts. Son nom, qui signifie "Maison de l'argent", rappelle son histoire liée aux mines d’argent, qui ont autrefois fait sa renommée.</p>
+    <p>C’est une ville où la nature et l’histoire se rencontrent. On y trouve des vallées verdoyantes, des villages anciens comme Santa Harabeleri, et des monuments qui témoignent de son passé riche, marqué par différentes civilisations. Gümüşhane est aussi connue pour sa gastronomie locale, avec ses fruits séchés et ses plats traditionnels uniques.</p>
+    <p>Aujourd’hui, c’est un endroit calme, apprécié pour son authenticité et ses paysages époustouflants, parfait pour ceux qui aiment découvrir des lieux chargés d’histoire et de beauté naturelle.</p>
+    <p>Découvrez notre ville à travers ses monuments, ses musées, ses restaurants et bien plus encore!</p>
+    <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30557.16084154033!2d39.443232895366506!3d40.45924322558754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40686b3df2d81289%3A0x5ec77a37a9439d98!2sG%C3%BCm%C3%BC%C5%9Fhane%2C%20Turkey!5e0!3m2!1sen!2str!4v1681463172423!5m2!1sen!2str" 
+    width="600" 
+    height="450" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+</section>
+
+<!-- Section Attractions -->
+<section id="attractions" class="intro">
+    <h2>Attractions à ne pas manquer</h2>
+    <p>Explorez les sites incontournables de [Nom de la Ville], de ses monuments historiques à ses magnifiques jardins.</p>
+    <div class="carousel">
+        <!-- Boutons -->
+        <button class="arrow left">&lt;</button>
+        <button class="arrow right">&gt;</button>
+
+        <!-- Images et descriptions -->
+        <div class="carousel-track">
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\1.jpeg" alt="Santa Harabeleri">
+                <div class="carousel-caption">Santa Harabeleri (Ruines de Santa) <br>
+                    Un village historique datant de l'époque byzantine, Santa Harabeleri est célèbre pour ses églises, ses maisons en pierre et son architecture unique. Niché dans les montagnes, le site offre une vue imprenable sur la nature environnante.</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\a2.jpeg" alt="Tomara Cascade">
+                <div class="carousel-caption">Tomara Şelalesi (Cascade de Tomara) <br>
+                    Située dans le district de Şiran, cette cascade spectaculaire est une merveille naturelle entourée de végétation luxuriante. C’est un endroit populaire pour les pique-niques et les amateurs de photographie.</div>
+            </div>
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\Karaca.jpg" alt="Karaca Mağarası">
+                <div class="carousel-caption">Karaca Mağarası ( grotte de Karaca )<br>
+                    Une grotte impressionnante avec des stalactites, des stalagmites et des formations rocheuses fascinantes. Elle est réputée pour ses propriétés bénéfiques pour les personnes souffrant de troubles respiratoires.
+            </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\4.jpeg" alt=" château">
+                <div class="carousel-caption">Château de Kov (Kov Kalesi) <br>
+                    Situé sur une colline, ce château médiéval offre une vue panoramique sur les vallées environnantes. Il témoigne de l’histoire stratégique de la région.
+            </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\a3.jpg" alt="lac">
+                <div class="carousel-caption">lacs Limni <br>
+                    Paradis naturel dans les montagnes Zigana, les lacs Limni sont entourés de forêts de sapins et sont parfaits pour se détendre, marcher ou camper.
+            </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="C:\Users\Daniel\Pictures\a4.jpg">
+                <div class="carousel-caption">Monastères historique <br>
+                    La région de Gümüşhane abrite plusieurs monastères anciens, comme le Monastère d’İmera, qui attirent les amateurs d’histoire et d’architecture religieuse.
+            </div>
+            </div>
+        </div>
+        <!-- Points indicateurs -->
+        <div class="dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+            <span class="dot" data-index="5"></span>
+        </div>
+    </div>
+
+</section>
+
+<!-- Section Restaurants -->
+<section id="restaurants" class="intro">
+    <h2>Restaurants recommandés</h2>
+    <p>Goûtez aux spécialités locales dans les meilleurs restaurants de la ville.</p>
+    <br>
+    <div class="floating-images-container">
+        <img src="C:\Users\Daniel\Downloads\L1.jpeg" class="floating-image">
+        <img src="C:\Users\Daniel\Downloads\p1.jpeg" class="floating-image">
+        <img src="C:\Users\Daniel\Downloads\t1.jpeg" class="floating-image">
+        <img src="C:\Users\Daniel\Downloads\d2.jpeg" class="floating-image">
+        <img src="C:\Users\Daniel\Downloads\g5.jpeg" class="floating-image">
+    </div>
+    <br>
+    <div>
+        <a href="C:\Users\Daniel\Desktop\DAISY\res.html" style="color: rgb(43, 43, 126); font-size: 2rem;">voir plus</a>
+    </div>
+</section>
+<section id="hebergement" class="intro">
+    <h2 style="text-align: center;">Où séjourner ?</h2>
+    <p style="text-align: center;">Découvrez les meilleurs hôtels et pensions pour un séjour confortable.</p>
+    <div class="image-container">
+        <!-- Image de fond -->
+        <img src="C:\Users\Daniel\Pictures\gumushane.jpg" alt="Image" style="opacity: 0.8;">
+        <!-- Texte superposé sur l'image -->
+        <div class="text-overlay">
+            <span class="ombre">Guide de voyage</span>
+            <span class="text-with-shadow" style="font-family: 'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive ; text-align: center;"><strong>Gumushanes</strong> </span>
+            <span class="rounded-div">
+                <a href="https://www.airbnb.fr/gumushane-turkiye/stays" target="_blank" style="color: black;">
+                  <i class="fa fa-bed" style="font-size:36px"></i>
+                   Trouver un hébergement
+                </a>
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- Section Contact -->
+<section id="contact">
+    <footer id="footer">
+        <p>© 2024 Gümüşhane Tourisme | Tous droits réservés</p>
+        <div>
+            <p><strong>Contactez-nous :</strong></p>
+            <p>Email : gumushanetourisme@gmail.com</p>
+            <p>Téléphone : +90 535 286 4478</p>
+            <p>Adresse : Hasanbey Mahellesi, 29000 Gümüşhane, Turquie</p>
+          </div>
+          <a href="#" class="back-to-top" id="back-to-top">
+            &#8679; <!-- Code de flèche vers le haut -->
+        </a>    
+    </footer>
+</section>
+<!-- Script JavaScript pour menu hamburger -->
+<script>
+    const menuIcon = document.getElementById("menu-icon");
+    const menu = document.getElementById("menu");
+
+    menuIcon.addEventListener("click", () => {
+        menu.classList.toggle("active");
+    });
+
+    window.onscroll = function() {
+        if (window.scrollY > 50) {
+            document.querySelector("header").style.backgroundColor = "#0056b3"; // Changer la couleur du header au défilement
+        } else {
+            document.querySelector("header").style.backgroundColor = "#007BFF"; // Couleur d'origine
+        }
+    };
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'fr', // Langue par défaut de votre site (ex: 'fr' pour Français)
+                includedLanguages: 'en,fr,es,ar,tr', // Langues disponibles pour la traduction
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+        );
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+    console.log("Site chargé !");
+});
+        // Sélectionnez le bouton
+        const backToTopButton = document.getElementById('back-to-top');
+
+// Ajoutez un écouteur de défilement
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { // Seuil pour afficher le bouton
+        backToTopButton.style.display = 'block';
+    } else {
+        backToTopButton.style.display = 'none';
+    }
+});
+
+// Ajoutez une animation pour remonter en douceur
+backToTopButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('.arrow.right');
+        const prevButton = document.querySelector('.arrow.left');
+        const dotsNav = document.querySelector('.dots');
+        const dots = Array.from(dotsNav.children);
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Mettre à jour la position de la piste
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Mettre à jour les points indicateurs
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function moveToNextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function moveToPrevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        nextButton.addEventListener('click', moveToNextSlide);
+        prevButton.addEventListener('click', moveToPrevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+</script>
+ <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Touristique de [Nom de la Ville]</title>
+    <style>
+        /* Style global */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #b1b2c7;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            text-align: justify;
+        }
+        .intro{
+            margin: 2rem;
+            padding-top: 80px;
+        }
+        .intro h2 {
+            color: #082747;
+        }
+
+        .intro p {
+            color: #333;
+        }
+        /* En-tête et navigation */
+        header {
+            padding: 1rem 0;
+            background-color: #244669;
+            color: white;
+            position: fixed;
+            width: 100%;
+            height: 100px;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            padding-top: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+        nav a {
+            padding-top: 0.5%;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #ffdd57;
+        }
+        /* Menu Hamburger */
+        .menu-icon {
+            display: none;
+            cursor: pointer;
+            margin-right: 5%;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .menu.active {
+            display: block;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #344a61;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu a {
+            display: block;
+            margin: 5px 0;
+        }
+        /* Media Queries */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .menu { 
+                margin-right: 50px;
+                display: none;
+            }
+
+            .menu a {
+                text-align: center;
+                padding: 10px 20px;
+            }
+        }
+
+ #language-selector {
+    position: fixed;
+    right: 10px;
+    z-index: 1000;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+#google_translate_element {
+    position: fixed;
+    right: 10px;
+    z-index: 1000;
+}
+/* Footer */
+footer {
+    background-color: #244669;
+    color: #fff;
+    text-align: center;
+    padding: 1%;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 20px; /* Distance par rapport au bas de la fenêtre */
+    right: 20px;  /* Distance par rapport au côté droit de la fenêtre */
+    background-color: #232424;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%; /* Forme circulaire */
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: none; /* Masqué par défaut */
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+.carousel {
+            transform: translateX(25%);
+            position: relative;
+            margin-left: 10%;
+            width: 60%;
+            max-width: 800px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Images */
+        .slides {
+            justify-content: center;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 50%;
+            object-fit: cover;
+        }
+.container {
+    display: flex;
+    align-items: center; /* Aligne le texte verticalement au centre de l'image */
+    gap: 1%; /* Espacement entre l'image et le texte */
+}
+.container img {
+    max-width: 30%; /* Ajuste la taille de l'image */
+    height: auto; /* Maintient les proportions de l'image */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+}
+.container .text {
+    flex: 1; /* Permet au texte d'occuper tout l'espace restant */
+}
+.carousel {
+            background: rgb(93, 93, 146);
+            padding-top: 50px;
+            position: relative;
+            max-width: 600px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Images */
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            text-align: center;
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+        }
+
+        /* Flèches */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .arrow.left {
+            left: 10px;
+        }
+
+        .arrow.right {
+            right: 10px;
+        }
+
+        /* Points indicateurs */
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #c09fd3;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+<!-- En-tête avec navigation -->
+<header>
+    <div id="google_translate_element"></div><br>
+    <nav>
+        <h1 style="text-align: center;">Guide de touristique de la ville de Gümüşhane</h1><br>
+        <div class="menu-icon" id="menu-icon" style="text-align: right;">&#9776;</div>
+        <div class="menu" id="menu">
+        <a href=C:\Users\Daniel\Desktop\DAISY\esssaie2.html>Accueil</a>
+        <a href="#histoire">Histoire</a>
+        <a href="#monuments">Monuments</a>
+        <a href="#culture">Culture</a>
+        <a href="#galerie">Gastronomie</a>
+        </div>
+    </nav>
+</header>
+<br><br><br>
+<section id="histoire" style=" margin-left: 20px;" class="intro">
+    <h2 style="text-align: center;">Histoire de la ville de Gümüşhane</h2>
+    <p style="margin-left: 40px;"><strong>Gümüşhane</strong> est une ville située dans le nord-est de la Turquie, dans la région de la mer Noire. Elle est connue pour ses richesses minières historiques, son patrimoine culturel diversifié et ses paysages montagneux.</p>
+    <p>
+        <strong>Origines et Antiquité</strong><br>
+        <ul>
+            <li>Les premières traces d'occupation humaine dans la région remontent à l'Antiquité. Gümüşhane se trouvait sur l'une des routes commerciales reliant la région de la mer Noire à l'Anatolie centrale et orientale.</li>
+            <li>À l'époque des empires Hittite et Urartéen, la région faisait partie d'une route commerciale importante pour l'échange de métaux précieux, en particulier l'argent.</li>
+            <li>Plus tard, elle fut intégrée au royaume du Pont, une entit.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>Période romaine et byzantine</strong>
+        <ul>
+            <li>Sous l'Empire romain, la ville et ses environs étaient des centres stratégiques en raison de leur position sur les routes commerciales reliant Trébizonde (Trabzon) à l'intérieur de l'Anatolie.</li>
+            <li>Pendant l'époque byzantine, la ville continua de jouer un rôle clé dans les échanges commerciaux. Elle était également un bastion pour la défense contre les incursions venant de l'Est.</li>
+            <li>Gümüşhane devint particulièrement célèbre pour ses mines d'argent, qui étaient exploitées dès cette période.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>Époque seldjoukide et ottomane</strong>
+        <ul>
+            <li>Au XIᵉ siècle, les Seldjoukides conquirent la région, établissant leur influence sur les routes commerciales et les centres de production minière.</li>
+            <li>Avec l'arrivée des Ottomans au XIVᵉ siècle, Gümüşhane prospéra davantage grâce à son rôle dans l'exploitation des métaux précieux et à sa localisation stratégique sur les routes reliant Trébizonde au plateau anatolien.</li>
+            <li>Durant l'époque ottomane, la ville devint un centre important de production d'argent, utilisé dans la frappe de monnaie pour l'empire.</li>
+            <li>Les Ottomans développèrent également l'agriculture et le commerce local, en faisant un hub économique.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>Période moderne</strong>
+        <ul>
+            <li>Pendant la guerre russo-turque <strong>(1877–1878)</strong> et la Première Guerre mondiale, la ville fut une zone stratégique en raison de sa proximité avec le Caucase.</li>
+            <li>En <strong>1916</strong>, la ville fut temporairement occupée par les forces russes avant d'être libérée par l'armée turque.</li>
+            <li>Au cours de la période républicaine, Gümüşhane devint une petite ville paisible, connue pour son agriculture (pommes et raisins secs), ses richesses minières, et ses traditions culturelles.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>Patrimoine et culture</strong>
+        <ul>
+            <li>Gümüşhane est célèbre pour ses<strong> monuments historiques,</strong> tels que 
+                <ul>
+                    <li>Les <strong>églises et monastères byzantins,</strong> souvent nichés dans des vallées reculées ou sur des sommets montagneux.</li>
+                    <li>Les <strong>ponts et châteaux ottomans,</strong> témoins de l'ingénierie de l'époque.</li>
+                </ul>
+            </li>
+            <li>La région abrite également de magnifiques<strong> villages abandonnés,</strong> comme<strong> Santa Harabeleri,</strong> un village grec orthodoxe déserté après l'échange de populations entre la Grèce et la Turquie en 1923.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>Aujourd'hui</strong>
+        <ul>
+            <li>Gümüşhane est une destination prisée pour ses<strong> paysages naturels</strong> : montagnes, vallées, rivières et lacs.</li>
+            <li>La ville continue d'attirer les passionnés d'histoire et de nature, notamment grâce à ses vestiges historiques et à sa proximité avec des merveilles naturelles comme le <strong>parc national de Karaca,</strong> connu pour ses grottes spectaculaires.</li>
+        </ul>
+    </p>
+  </section>
+  <section id="monuments">
+  <section class="intro" style="justify-content: center; margin-left: 20 px;">
+    <h2 style="text-align: center;">Monuments historiques de la ville de Gümüşhane</h2>
+  </section>
+    <div class="carousel">
+        <!-- Flèches -->
+        <button class="arrow left">&lt;</button>
+        <button class="arrow right">&gt;</button>
+
+        <!-- Pistes des images -->
+        <div class="carousel-track">
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>1. Santa Harabeleri (Ruines de Santa)</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\1.jpeg" >
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>2. Monastère de Kızlar </strong></h3>
+                <img src="C:\Users\Daniel\Pictures\2.jpeg" >
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>3. Monastère de Çakırgöl</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\3.jpeg" >
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>4. Château de Kov (Kov Kalesi)</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\4.jpeg">
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>5. Château de Torul (Torul Kalesi)</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\5.jpeg">
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>6. Mosquée Suleymaniye</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\6.jpeg">
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>7. Grottes historiques</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\karaca.jpg" >
+              </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>8. Ponts historiques</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\torul.jpeg" >
+            </div>
+            <div class="carousel-slide">
+                <h3 style="text-align: center;"><strong>9. Monastère de Sumela</strong></h3>
+                <img src="C:\Users\Daniel\Pictures\Monastère_de_Sumela.jpeg" >
+            </div>
+        </div>
+
+        <!-- Points indicateurs -->
+        <div class="dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+            <span class="dot" data-index="5"></span>
+            <span class="dot" data-index="6"></span>
+            <span class="dot" data-index="7"></span>
+            <span class="dot" data-index="8"></span>
+        </div>
+    </div>
+  </section>
+  <section class="intro" id="culture" style="margin-left: 20px;">
+    <h2 style="text-align: center;">Culture de la ville de Gümüşhane</h2>
+    <p>La culture de Gümüşhane, située dans le nord-est de la Turquie, est le reflet d'un mélange unique de traditions anciennes, influencées par diverses civilisations comme les Byzantins, les Ottomans, et les Seldjoukides. Cette richesse culturelle est visible dans les modes de vie, les arts, la gastronomie, les festivals et les coutumes locales.</p>  
+    <p>
+        <strong>1. Musique et danse</strong><br>La musique traditionnelle de Gümüşhane est influencée par les sonorités de la région de la mer Noire :
+        <ul>
+            <li><strong>Kemençe</strong>: Cet instrument à cordes est central dans la musique folklorique, accompagné souvent de chants narratifs.</li>
+            <li><strong>Danses traditionnelles</strong>: Les danses de groupe, comme le horon, sont très populaires. Elles sont exécutées avec des mouvements rapides et énergiques, reflétant le dynamisme de la culture locale.
+            </li>
+        </ul>
+      </p>
+    <p>
+        <strong>2. Artisanat</strong>
+        <br>L'artisanat est un aspect important de la culture de Gümüşhane :
+        <ul>
+            <li><strong>Tissage</strong> : Le tissage traditionnel de tapis et de kilims est encore pratiqué dans certains villages.</li>
+            <li><strong>Travail du bois</strong> : Les habitants fabriquent des objets artisanaux en bois, comme des meubles ou des ustensiles, souvent décorés de motifs traditionnels.</li>
+            <li><strong>Bijoux et objets en argent</strong>: Étant une région historiquement riche en argent, l'artisanat lié au métal reste un savoir-faire important.</li>
+        </ul>
+    </p>
+    <p>
+        <strong>3. Coutumes et traditions</strong>
+        <ul>
+            <li><strong>Mariages traditionnels</strong> Les mariages sont célébrés avec des cérémonies colorées et des rituels transmis de génération en génération. Les invités participent aux danses et aux chants en l'honneur des mariés.</li>
+            <li><strong>Hospitalité</strong> Comme dans de nombreuses régions de Turquie, l'hospitalité est une valeur essentielle à Gümüşhane. Les visiteurs sont accueillis avec des repas généreux et de la chaleur humaine</li>
+        </ul>
+    </p>
+    <p>
+        <strong>4. Vie religieuse</strong><br>
+        La population de Gümüşhane est majoritairement musulmane sunnite, et la religion joue un rôle important dans la vie quotidienne. Les mosquées historiques, comme <strong>la Mosquée Süleymaniye,</strong> sont des lieux de culte centraux.
+    </p>
+    <p>
+        <strong>5. Relation avec la nature</strong><br>
+        Gümüşhane est entourée de montagnes et de forêts, ce qui influence fortement le mode de vie. Les habitants respectent et vivent en harmonie avec leur environnement, en s'engageant dans des activités comme l'agriculture, l'élevage et la collecte de plantes sauvages.
+    </p>
+    <div class="festival">
+      <h3 style="text-align: center;">Le Festival de la ville de Gümüşhane</h3>
+      <p>Gümüşhane organise plusieurs festivals tout au long de l'année qui reflètent la richesse culturelle, historique et naturelle de la région. Ces événements sont l'occasion de célébrer les traditions locales, la musique, la danse, la gastronomie et les paysages spectaculaires de cette région montagneuse.      </p>
+      <p>
+        <ol>
+            <li><strong>Festival de Kuşburnu: </strong> Organisé pour célébrer l'églantier, cet événement met en avant les produits locaux à base de cette baie.
+        <div class="container">
+            <img src="C:\Users\Daniel\Pictures\f1.jpeg" class="float-img" style="width: 60% ; height: 60%;">
+            <div class="text">
+                <ul>
+                    <li><strong>Description :</strong>Ce festival célèbre l'églantier, une plante abondante dans la région, utilisée pour produire du sirop, des confitures et des tisanes.</li>
+                    <li><strong>Activités :</strong>
+                    <ul>
+                        <li>Spectacles folkloriques avec musique et danse.</li>
+                        <li>Stands artisanaux et démonstrations de cuisine traditionnelle.</li>
+                        <li>Dégustation de produits locaux à base de kuşburnu.</li>
+                    </ul>
+                    </li>
+                    <li><strong>Période :</strong>Généralement en automne, lorsque les baies sont récoltées.</li>
+                </ul>
+            </div>
+        </div>
+        </li>
+        <li><strong>Festival des Highlands </strong> Ce festival met en avant la culture des hauts plateaux (yaylas), où les habitants se rendent en été pour pratiquer l'élevage et se ressourcer. 
+                    <ul>
+                        <li><strong>Activités :</strong>
+                        <ul>
+                            <li> Danses traditionnelles comme le horon.</li>
+                            <li>Concours de cuisine locale.</li>
+                            <li>Jeux traditionnels comme la lutte à l'huile (yağlı güreş).</li>
+                        </ul>
+                        </li>
+                        <li><strong>Lieux populaires :</strong>
+                        <ul>
+                            <li><strong>Kadırga Yaylası : </strong>Un des hauts plateaux les plus célèbres de la région.</li>
+                            <li><strong>Kadırga Yaylası : </strong> Avec ses lacs glaciaires et ses paysages spectaculaires.</li>
+                        </ul></li>
+                    </ul>
+            </li>
+            <li><strong>Festival de Karaca Mağarası </strong> Cet événement célèbre l’une des grottes les plus spectaculaires de Turquie, située près de Gümüşhane.
+                        <ul>
+                            <li><strong>Activités :</strong>
+                            <ul>
+                                <li>Visites guidées de la grotte.</li>
+                                <li>Spectacles en plein air mettant en avant la musique et les traditions locales.</li>
+                                <li>Expositions sur la géologie et la nature de la région.</li>
+                            </ul>
+                            </li>
+                            <li><strong>Période :</strong>Pendant les mois d'été, lorsque le tourisme est à son apogée. </li>
+                        </ul>
+                </li>
+                <li><strong>Festival de la Pomme et de la Noix </strong> La ville est célèbre pour ses pommes et ses noix de qualité. Ce festival célèbre ces produits avec des concours et des démonstrations.
+                            <ul>
+                                <li><strong>Activités :</strong>
+                                <ul>
+                                    <li>Concours de la plus belle pomme et des meilleures noix.</li>
+                                    <li>Stands proposant des plats locaux et des desserts à base de noix.</li>
+                                    <li>Activités pour les enfants et spectacles folkloriques.</li>
+                                </ul>
+                                </li>
+                                <li><strong>Période :</strong> En automne, pendant la saison des récoltes.</li>
+                            </ul>
+                    </li>
+                    <li><strong>Festival de Santa Harabeleri (Ruines de Santa) </strong> Ce festival met en avant les ruines historiques du village de Santa, attirant à la fois les habitants locaux et les touristes.
+                                <ul>
+                                    <li><strong>Activités :</strong>
+                                    <ul>
+                                        <li>Visites guidées des ruines.</li>
+                                        <li>Reconstitutions historiques et spectacles traditionnels.</li>
+                                        <li>Dégustations de produits locaux dans un cadre naturel exceptionnel.</li>
+                                    </ul>
+                                    </li>
+                                    <li><strong>Période :</strong>En été, pour profiter des paysages verdoyants.
+                                    </li>
+                                </ul>
+                        </li>
+                        <li><strong>Festival de la Culture et des Arts de Gümüşhane </strong>Un festival généraliste qui célèbre la culture locale, les arts et les traditions.
+                            <div class="container">
+                                <img src="C:\Users\Daniel\Pictures\f6.jpeg" class="float-img" style="width: 60% ; height: 60%;">
+                                <div class="text">
+                                    <ul>
+                                        <li><strong>Activités :</strong>
+                                        <ul>
+                                            <li>Spectacles folkloriques avec musique et danse.</li>
+                                            <li>Expositions d'artisanat local et de photographies.</li>
+                                            <li>Discussions et séminaires sur l'histoire et la culture de la région.</li>
+                                        </ul>
+                                        </li>
+                                        <li><strong>Période :</strong>Généralement en été, pour maximiser la participation.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            </li>
+                            <li><strong>Festival de Torul et du Château de Torul </strong> Organisé près du château de Torul, ce festival attire les amateurs d'histoire et de sensations fortes grâce à la passerelle en verre.
+                                <div class="container">
+                                    <img src="C:\Users\Daniel\Pictures\f7.jpeg" class="float-img" style="width: 60% ; height: 60%;">
+                                    <div class="text">
+                                        <ul>
+                                            <li><strong>Activités :</strong>
+                                            <ul>
+                                                <li>Activités sportives comme l'escalade et le trekking.</li>
+                                                <li>Activités sportives comme l'escalade et le trekking.</li>
+                                                <li>Vente de produits artisanaux locaux.</li>
+                                            </ul>
+                                            </li>
+                                            <li><strong>Période :</strong>Pendant la saison estivale. </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </li>
+                                <li><strong>Festivals de lutte à l'huile (Yağlı Güreş) </strong> Comme dans de nombreuses régions de Turquie, la lutte à l'huile est une tradition à Gümüşhane.
+                                    <div class="container">
+                                        <img src="C:\Users\Daniel\Pictures\f8.jpeg" class="float-img" style="width: 60% ; height: 60%;">
+                                        <div class="text">
+                                            <ul>
+                                                <li><strong>Activités :</strong>
+                                                <ul>
+                                                    <li>Compétitions de lutte traditionnelles.</li>
+                                                    <li>Fêtes en plein air avec de la musique et des danses.</li>
+                                                </ul>
+                                                </li>
+                                                <li><strong>Période :</strong>Principalement en été, sur les hauts plateaux.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    </li>
+                                                                                                                
+        </ol>
+    </p>
+    </div>
+      </section>
+  <section class="intro" id="galerie" style="margin-left: 20px;">
+    <h2 style="text-align: center;">Gastronomie de la ville de Gümüşhane</h2>
+    <div class="galerie">
+        <p>La gastronomie de Gümüşhane reflète ses traditions rurales et montagnardes, avec des plats simples mais riches en saveurs, préparés à partir de produits frais et locaux. Les spécialités emblématiques incluent le <strong>Siron</strong> (rouleaux de pâte fine avec yaourt et beurre), le <strong>Pestil</strong> et <strong>Köme</strong> (friandises à base de fruits et de noix), ainsi que des soupes nourrissantes comme l'<strong>Ekşi Çorbası</strong> (soupe acidulée) et le <strong>Kara Lahana Çorbası</strong> (soupe de chou noir).</p>
+
+        <p> Les desserts, comme la <strong>marmelade d’églantier</strong>, et les boissons locales, telles que le <strong>thé d’églantier</strong>, témoignent de l’utilisation ingénieuse des ressources naturelles. Cette cuisine met à l'honneur des recettes saisonnières et des techniques de conservation traditionnelles, offrant une expérience culinaire authentique et conviviale.</p>
+      </div>
+    </section>
+<section id="contact">
+    <footer id="footer" style="text-align: center;">
+        <p>© 2024 Gümüşhane Tourisme | Tous droits réservés</p>
+        <div>
+            <p><strong>Contactez-nous :</strong></p>
+            <p>Email : gumushanetourisme@gmail.com</p>
+            <p>Téléphone : +90 535 286 4478</p>
+            <p>Adresse : Hasanbey Mahellesi, 29000 Gümüşhane, Turquie</p>
+          </div>
+          <a href="#" class="back-to-top" id="back-to-top">
+            &#8679; <!-- Code de flèche vers le haut -->
+        </a>    
+    </footer>
+</section>
+<!-- Script JavaScript pour menu hamburger -->
+<script>
+    const menuIcon = document.getElementById("menu-icon");
+    const menu = document.getElementById("menu");
+
+    menuIcon.addEventListener("click", () => {
+        menu.classList.toggle("active");
+    });
+
+    window.onscroll = function() {
+        if (window.scrollY > 50) {
+            document.querySelector("header").style.backgroundColor = "#0056b3"; // Changer la couleur du header au défilement
+        } else {
+            document.querySelector("header").style.backgroundColor = "#007BFF"; // Couleur d'origine
+        }
+    };
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'fr', // Langue par défaut de votre site (ex: 'fr' pour Français)
+                includedLanguages: 'en,fr,es,ar,tr', // Langues disponibles pour la traduction
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+        );
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+    console.log("Site chargé !");
+});
+        // Sélectionnez le bouton
+        const backToTopButton = document.getElementById('back-to-top');
+
+// Ajoutez un écouteur de défilement
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { // Seuil pour afficher le bouton
+        backToTopButton.style.display = 'block';
+    } else {
+        backToTopButton.style.display = 'none';
+    }
+});
+
+// Ajoutez une animation pour remonter en douceur
+backToTopButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('.arrow.right');
+        const prevButton = document.querySelector('.arrow.left');
+        const dotsNav = document.querySelector('.dots');
+        const dots = Array.from(dotsNav.children);
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Mettre à jour la position de la piste
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // Mettre à jour les points indicateurs
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function moveToNextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function moveToPrevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        nextButton.addEventListener('click', moveToNextSlide);
+        prevButton.addEventListener('click', moveToPrevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+ </script>
+ <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
